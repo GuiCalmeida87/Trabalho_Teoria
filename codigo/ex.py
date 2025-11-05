@@ -3,9 +3,6 @@ import random
 import statistics
 from typing import List
 
-# ----------------------------------------------------
-# 1. FUNÇÃO is_subset_sum (Sem comentários, conforme solicitado)
-# ----------------------------------------------------
 def is_subset_sum(conjunto: List[int], soma_alvo: int) -> bool:
     n = len(conjunto)
     dp = [[False] * (soma_alvo + 1) for _ in range(n + 1)]
@@ -23,24 +20,15 @@ def is_subset_sum(conjunto: List[int], soma_alvo: int) -> bool:
 
     return dp[n][soma_alvo]
 
-# ----------------------------------------------------
-# 2. FUNÇÕES DE GERAÇÃO DE DADOS
-# ----------------------------------------------------
 
 def gerar_conjunto(tamanho: int, max_valor: int) -> List[int]:
-
     return [random.randint(1, max_valor) for _ in range(tamanho)]
 
-# ----------------------------------------------------
-# 3. CONFIGURAÇÃO DOS TESTES E SIMULAÇÃO
-# ----------------------------------------------------
-
-# Definindo as configurações dos testes
-NUM_REPETICOES = 20  # Número de vezes que cada teste será executado
+NUM_REPETICOES = 20  
 CONFIGURACOES = [
-    {"nome": "Pequeno", "tamanho_conjunto": 5, "max_valor": 10, "soma_alvo": 15},
+    {"nome": "Pequeno", "tamanho_conjunto": 10, "max_valor": 20, "soma_alvo": 30},
     {"nome": "Médio", "tamanho_conjunto": 50, "max_valor": 50, "soma_alvo": 1250},
-    {"nome": "Grande", "tamanho_conjunto": 100, "max_valor": 100, "soma_alvo": 3000},
+    {"nome": "Grande", "tamanho_conjunto": 150, "max_valor": 100, "soma_alvo": 3000},
 ]
 
 print(" Iniciando Simulação de Desempenho do Subconjunto Soma (DP)")
@@ -50,22 +38,18 @@ resultados_simulacao = []
 
 for config in CONFIGURACOES:
     tempos = []
-    
-    # Geração dos dados para o teste
+
     conjunto = gerar_conjunto(config["tamanho_conjunto"], config["max_valor"])
     soma_alvo = config["soma_alvo"]
     
-    # Execução das repetições
     for _ in range(NUM_REPETICOES):
         inicio = time.perf_counter()
-        
-        # Chamada do algoritmo Subconjunto Soma
+
         is_subset_sum(conjunto, soma_alvo)
         
         fim = time.perf_counter()
         tempos.append(fim - inicio)
         
-    # Cálculo das estatísticas
     media_tempo = statistics.mean(tempos)
     desvio_padrao = statistics.stdev(tempos) if len(tempos) > 1 else 0
 
@@ -76,10 +60,6 @@ for config in CONFIGURACOES:
         "Tempo Médio (s)": f"{media_tempo:.6f}",
         "Desvio Padrão (s)": f"{desvio_padrao:.6f}",
     })
-
-# ----------------------------------------------------
- # EXIBIÇÃO DOS RESULTADOS
-# ----------------------------------------------------
 
 print("Resultados da Simulação:")
 print("-" * 75)
